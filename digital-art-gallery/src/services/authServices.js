@@ -1,5 +1,5 @@
 // src/services/authService.js
-import { auth } from '../firebase-config';
+import { auth } from './firebase-config';
 
 export const signUp = (email, password) => {
   return auth.createUserWithEmailAndPassword(email, password);

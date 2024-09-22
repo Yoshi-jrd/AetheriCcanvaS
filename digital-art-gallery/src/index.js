@@ -15,3 +15,9 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// src/index.js
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('YOUR_GA_TRACKING_ID');
+ReactGA.pageview(window.location.pathname + window.location.search);
