@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { UserProvider } from './contexts/UserContext';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
 import Blog from './pages/Blog';
@@ -11,20 +10,18 @@ import './App.css';
 
 function App() {
   return (
-    <UserProvider>
-      <Router>
-        <div className="App">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/donate" element={<Donate />} />
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
-    </UserProvider>
+    <Router>
+      <Header />
+      <div className="container mx-auto px-4">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/donate" element={<Donate />} />
+        </Routes>
+      </div>
+      <Footer />
+    </Router>
   );
 }
 

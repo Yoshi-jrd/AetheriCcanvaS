@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { db } from '../services/firebase-config';
 
 function Blog() {
-    const posts = [{ id: 1, title: "Blog Post 1", summary: "Summary of post 1" }, { id: 2, title: "Blog Post 2", summary: "Summary of post 2" }];
+  const [posts, setPosts] = useState([]);
 
-    return (
-        <div className="container mx-auto px-4">
-            <ul>
-                {posts.map((post) => (
-                    <li key={post.id} className="bg-white p-4 mb-4 shadow">
-                        <h2 className="text-2xl font-bold">{post.title}</h2>
-                        <p className="text-gray-700 text-base">{post.summary}</p>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Read More
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const snapshot = await db.collection('blogPosts').get();
+      const postsArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setPosts(postsArray);
+    };
+
+    fetchPosts();
+  }, []);
+
+  return (
+    <div className="blog space-y-4">
+      {posts.map(post => (
+        <article key={post.id} className="p-5 bg-white shadow rounded-lg">
+          <h2 className="text-xl font-bold">{post.title}</h2>
+          <p>{post.content}</p>
+        </article>
+      ))}
+    </div>
+  );
 }
 
 export default Blog;

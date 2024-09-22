@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { db } from '../services/firebase-config';
 
 function Gallery() {
-    const artworks = [{ id: 1, title: "Artwork 1", img: "url_to_image_1" }, { id: 2, title: "Artwork 2", img: "url_to_image_2" }]; // Add your artwork details here
+  const [artworks, setArtworks] = useState([]);
 
-    return (
-        <div className="container mx-auto px-4">
-            <div className="grid grid-cols-3 gap-4">
-                {artworks.map((artwork) => (
-                    <div key={artwork.id} className="max-w-sm rounded overflow-hidden shadow-lg">
-                        <img className="w-full" src={artwork.img} alt={artwork.title} />
-                        <div className="px-6 py-4">
-                            <div className="font-bold text-xl mb-2">{artwork.title}</div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      const snapshot = await db.collection('artworks').get();
+      const artworksArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setArtworks(artworksArray);
+    };
+
+    fetchArtworks();
+  }, []);
+
+  return (
+    <div className="gallery grid grid-cols-3 gap-4">
+      {artworks.map(art => (
+        <div key={art.id} className="artwork-card">
+          <img src={art.imageUrl} alt={art.title} className="w-full" />
+          <div className="p-4">
+            <h3 className="text-lg font-bold">{art.title}</h3>
+            <p>{art.description}</p>
+          </div>
         </div>
-    );
+      ))}
+    </div>
+  );
 }
 
 export default Gallery;
