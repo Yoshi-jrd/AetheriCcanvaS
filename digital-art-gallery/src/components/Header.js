@@ -17,8 +17,4 @@ function Header() {
     );
 }
 
-// In Header.js or wherever you define navigation links
-<Link to="/" className="nav-link" aria-label="Navigate to Home page">Home</Link>
-
-
 export default Header;

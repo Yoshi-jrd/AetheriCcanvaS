@@ -1,14 +1,13 @@
-// src/services/authService.js
 import { auth } from './firebase-config';
 
-export const signUp = (email, password) => {
+export const createUser = async (email, password) => {
   return auth.createUserWithEmailAndPassword(email, password);
 };
 
-export const signIn = (email, password) => {
+export const signInUser = async (email, password) => {
   return auth.signInWithEmailAndPassword(email, password);
 };
 
-export const signOut = () => {
+export const signOutUser = async () => {
   return auth.signOut();
 };
